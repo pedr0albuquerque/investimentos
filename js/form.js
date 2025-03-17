@@ -1,7 +1,7 @@
 import { Investment } from './classes/Investimento.js'
 
-export let form = document.querySelector('#formInvestment')
-export let listInvestments = JSON.parse(localStorage.getItem('listInvestments')) || [];
+let form = document.querySelector('#formInvestment')
+let listInvestments = [];
 
 
 /*evento disparado quando botao do formulario é clicado*/

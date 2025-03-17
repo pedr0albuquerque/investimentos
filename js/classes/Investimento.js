@@ -1,8 +1,7 @@
 
 
 export class Investment{
-  constructor(id,nameInvestment,typeInvestment,valueInvestment,dateInvestment){
-    this.id = id
+  constructor(nameInvestment,typeInvestment,valueInvestment,dateInvestment){
     this.nameInvestment = nameInvestment
     this.typeInvestment = typeInvestment
     this.valueInvestment = valueInvestment

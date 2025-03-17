@@ -1,4 +1,3 @@
-import { listInvestments } from './form.js'
 
 
 
@@ -6,12 +5,14 @@ import { listInvestments } from './form.js'
 function createTable() {
     // Seleciona o corpo da tabela
     const tabelaBody = document.querySelector('#tableInvestment tbody');
+    const listInvestments = JSON.parse(localStorage.getItem('listInvestments')) || [];
+console.log(listInvestments)
     listInvestments.forEach(investment => {
         const line = document.createElement('tr');
 
         const nameInvestment = document.createElement('td');
         nameInvestment.textContent = investment.nameInvestment;
-console.log(nameInvestment.textContent)
+        console.log(nameInvestment.textContent)
 
         const typeInvestment = document.createElement('td');
         typeInvestment.textContent = investment.typeInvestment;
