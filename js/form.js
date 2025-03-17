@@ -21,11 +21,11 @@ if(form && form != null){
     let nameInvestment = document.querySelector('#nameInvestment').value
     let typeInvestment = document.querySelector('input[name="typeInvestment"]:checked').value
     let valueInvestment = parseFloat(document.querySelector('#valueInvestment').value)
-    let dateInvestment = document.querySelector('#dateInvestment').value
-  
+    let dateInvestment = document.querySelector('#dateInvestment').value    
+
     const investment = new Investment(idInvestment,nameInvestment,typeInvestment,valueInvestment,dateInvestment)
     listInvestments.push(investment)
-
+  
     localStorage.setItem('listInvestments', JSON.stringify(listInvestments));
     window.location.href = "telaListar.html";
   })

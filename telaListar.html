@@ -30,5 +30,47 @@
   </table>
 
   <a href="telaCadastro.html"><button id="btnBack">Voltar</button></a>
+
+  <table id="tableInvestment">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Tipo</th>
+        <th>Valor</th>
+        <th>Data</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Dados da tabela serão preenchidos aqui -->
+    </tbody>
+  </table>
+  
+  <!-- Formulário de edição, que ficará oculto inicialmente -->
+  <div id="editForm" style="display: none;">
+    <h3>Editar Investimento</h3>
+    <form id="formEditInvestment">
+      <input type="hidden" id="editIdInvestment">
+      <div>
+        <label for="editNameInvestment">Nome do Investimento:</label>
+        <input type="text" id="editNameInvestment">
+      </div>
+      <div>
+        <label for="editTypeInvestment">Tipo do Investimento:</label>
+        <input type="text" id="editTypeInvestment">
+      </div>
+      <div>
+        <label for="editValueInvestment">Valor Investido:</label>
+        <input type="text" id="editValueInvestment">
+      </div>
+      <div>
+        <label for="editDateInvestment">Data do Investimento:</label>
+        <input type="month" id="editDateInvestment">
+      </div>
+      <button type="submit">Salvar Alterações</button>
+    </form>
+  </div>
+  
 </body>
 </html>
