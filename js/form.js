@@ -21,7 +21,7 @@ if(form && form != null){
     listInvestments.push(investment)
 
     localStorage.setItem('listInvestments', JSON.stringify(listInvestments));
-
+    window.location.href = "telaListar.html";
   
   })
 }
