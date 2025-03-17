@@ -26,11 +26,24 @@ function createTable() {
         const dateInvestment = document.createElement('td');
         dateInvestment.textContent = investment.dateInvestment;
 
+        const btnEdit = document.createElement('button');
+        btnEdit.id = "btnEdit"
+        btnEdit.innerText = "Editar"
+
+        const btnDelete = document.createElement('button');
+        btnDelete.id = "btnDelete"
+        btnDelete.innerText = "Deletar"
+
+        const actions = document.createElement('td');
+        actions.appendChild(btnEdit)
+        actions.appendChild(btnDelete)
+
         line.appendChild(idInvestment);
         line.appendChild(nameInvestment);
         line.appendChild(typeInvestment);
         line.appendChild(valueInvestment);
         line.appendChild(dateInvestment);
+        line.appendChild(actions)
 
         tabelaBody.appendChild(line);
     });
