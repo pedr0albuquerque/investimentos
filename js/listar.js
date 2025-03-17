@@ -90,7 +90,7 @@ function saveInvestmentChanges() {
     
     // Buscar o investimento na lista e atualizar seus valores
     const listInvestments = JSON.parse(localStorage.getItem('listInvestments')) || [];
-    const investmentIndex = listInvestments.findIndex(inv => inv.idInvestment === idInvestment);
+    const investmentIndex = listInvestments.findIndex(inv => inv.idInvestment == idInvestment);
     console.log(investmentIndex)
 
       listInvestments[investmentIndex] = {

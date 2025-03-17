@@ -1,3 +1,4 @@
 # Para abrir o cadastro utilize a extensão LiveServer
-# Cadastrando e Listando
-# Falta funcionalidade editar e deletar
+# Abra o LiveServer no arquivo telaCadastro (goLive)
+# Crud funcionando
+# Bug na data (datas futuras)
