@@ -1,0 +1,25 @@
+{
+  "name": "investimentos",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pedr0albuquerque/investimentos.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pedr0albuquerque/investimentos/issues"
+  },
+  "homepage": "https://github.com/pedr0albuquerque/investimentos#readme",
+  "devDependencies": {
+    "mysql2": "^3.14.1",
+    "sequelize": "^6.37.7"
+  }
+}

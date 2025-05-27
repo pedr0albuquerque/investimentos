@@ -1,4 +1,4 @@
-import { Investment } from './classes/Investimento.js'
+import { Investment } from '../model/Investiment.js'
 
 const form = document.querySelector('#formInvestment')
 let listInvestments = [];
@@ -25,7 +25,7 @@ if(form && form != null){
 
     const investment = new Investment(idInvestment,nameInvestment,typeInvestment,valueInvestment,dateInvestment)
     listInvestments.push(investment)
-  
+
     localStorage.setItem('listInvestments', JSON.stringify(listInvestments));
     window.location.href = "telaListar.html";
   })
