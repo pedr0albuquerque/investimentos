@@ -18,7 +18,8 @@
     "url": "https://github.com/pedr0albuquerque/investimentos/issues"
   },
   "homepage": "https://github.com/pedr0albuquerque/investimentos#readme",
-  "devDependencies": {
+  "dependencies": {
+    "express": "^5.1.0",
     "mysql2": "^3.14.1",
     "sequelize": "^6.37.7"
   }
