@@ -1,10 +1,9 @@
-function createTable() {
+function loadTable(listInvestments) {
     const tabelaBody = document.querySelector('#tableInvestment tbody');
     tabelaBody.innerHTML = '';
 
-    const listInvestments = JSON.parse(localStorage.getItem('listInvestments')) || [];
-
-    listInvestments.forEach(investment => {
+    if(Array.isArray(listInvestments)){
+      listInvestments.forEach(investment => {
         const line = document.createElement('tr');
 
         const idInvestment = document.createElement('td');
@@ -25,7 +24,7 @@ function createTable() {
         const btnEdit = document.createElement('button');
         btnEdit.id = "btnEdit";
         btnEdit.innerText = "Editar";
-        btnEdit.addEventListener('click', () => editInvestment(investment));
+        btnEdit.addEventListener('click', () => showFormEdit(investment));
         btnEdit.style.backgroundColor = 'green';
         btnEdit.style.color = 'white';
         btnEdit.style.borderRadius = '8px';
@@ -59,70 +58,84 @@ function createTable() {
 
         tabelaBody.appendChild(line);
     });
+    }
 }
 
-fetch("http://localhost:3000/investimentos")
-  .then(response => response.json())
-  .then(data => {console.log(data)});
+const getInv = async() => await fetch("http://localhost:3000/investimentos")
+.then(response => response.json())
+.then(data => {loadTable(data)});
 
-function editInvestment(investment) {
-    // Preencher o formulário com os dados do investimento selecionado
-    document.querySelector('#editIdInvestment').value = investment.idInvestment;
-    document.querySelector('#editNameInvestment').value = investment.nameInvestment;
-    document.querySelector('#editTypeInvestment').value = investment.typeInvestment;
-    document.querySelector('#editValueInvestment').value = investment.valueInvestment;
-    document.querySelector('#editDateInvestment').value = investment.dateInvestment;
-  
-    // Mostrar o formulário de edição
-    document.querySelector('#editForm').style.display = 'block';
-  
-    // Submeter o formulário para salvar as alterações
-    document.querySelector('#formEditInvestment').onsubmit = function(event) {
-      event.preventDefault();
-      saveInvestmentChanges();
-    };
+getInv();
+
+let idInvestment = null
+
+function showFormEdit(investment) {
+  console.log(investment);
+  // Preencher o formulário com os dados do investimento selecionado
+  const inputEditName = document.querySelector('#editNameInvestment');
+  const inputEditType = document.querySelector('#editTypeInvestment');  
+  const inputEditValue = document.querySelector('#editValueInvestment');
+  const inputEditDate = document.querySelector('#editDateInvestment');
+
+  inputEditName.value = investment.nameInvestment;
+  inputEditType.value = investment.typeInvestment;
+  inputEditValue.value = investment.valueInvestment;
+  inputEditDate.value = investment.dateInvestment;
+
+  //Passa o id do investimento para a variável global
+  idInvestment = investment.idInvestment;
+
+  // Mostrar o formulário de edição
+  document.querySelector('#editForm').style.display = 'block';
 }
 
-function saveInvestmentChanges() {
-    const idInvestment = document.querySelector('#editIdInvestment').value;
-    const nameInvestment = document.querySelector('#editNameInvestment').value;
-    const typeInvestment = document.querySelector('#editTypeInvestment').value;
-    const valueInvestment = document.querySelector('#editValueInvestment').value;
-    const dateInvestment = document.querySelector('#editDateInvestment').value;
-  
-    
-    // Buscar o investimento na lista e atualizar seus valores
-    const listInvestments = JSON.parse(localStorage.getItem('listInvestments')) || [];
-    const investmentIndex = listInvestments.findIndex(inv => inv.idInvestment == idInvestment);
-    console.log(investmentIndex)
+document.querySelector('#editForm').addEventListener('submit', function(event) {
+  event.preventDefault();
+  const inputEditName = document.querySelector('#editNameInvestment').value;
+  const inputEditType = document.querySelector('#editTypeInvestment').value;  
+  const inputEditValue = document.querySelector('#editValueInvestment').value;
+  const inputEditDate = document.querySelector('#editDateInvestment').value;
 
-      listInvestments[investmentIndex] = {
-        idInvestment,
-        nameInvestment,
-        typeInvestment,
-        valueInvestment,
-        dateInvestment
-      };
-  
-      // Salvar de volta no localStorage
-      localStorage.setItem('listInvestments', JSON.stringify(listInvestments));
-      
-      // Recarregar a tabela com os dados atualizados
-      createTable();
-  
-      // Ocultar o formulário de edição após salvar
-      document.querySelector('#editForm').style.display = 'none';
-}
+  if (!inputEditName || !inputEditType || isNaN(inputEditValue) || !inputEditDate) {
+    alert("Por favor, preencha todos os campos corretamente.");
+    return;
+  }else{
+      fetch(`http://localhost:3000/investimentos/atualizar/${idInvestment}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          nameInvestment: inputEditName,
+          typeInvestment: inputEditType,
+          valueInvestment: inputEditValue,
+          dateInvestment: inputEditDate
+        })
+      })
+      .then(response => {
+        if(response.status === 200){
+          alert("Investimento atualizado com sucesso")
+          getInv();
+        }else{
+          alert("Falha ao atualizar investimento");
+        }
+        document.querySelector('#editForm').style.display = 'none';
+      })
+    }
+});
 
 function deleteInvestment(idInvestment) {
-    const listInvestments = JSON.parse(localStorage.getItem('listInvestments')) || [];
-    const updatedList = listInvestments.filter(investment => investment.idInvestment !== idInvestment);
-    
-    // Salvar a lista atualizada no localStorage
-    localStorage.setItem('listInvestments', JSON.stringify(updatedList));
-  
-    // Recarregar a tabela com a lista atualizada
-    createTable();
+  fetch(`http://localhost:3000/investimentos/deletar/${idInvestment}`, {
+    method: 'DELETE'
+  })
+  .then(response => {
+    if(response.status === 200){
+      alert("Investimento deletado com sucesso")
+      getInv();
+    }else{
+      alert("Falha ao deletar investimento");
+    }
+  })
 }
 
-window.onload = createTable;
+window.onload = loadTable;

@@ -6,14 +6,9 @@ const app = express()
 app.use(express.json());
 app.use(cors());
 
-app.get("/investimentos", (req, res) => {
-    try {
-        getAllInvestments();
-        res.status(200).json({ message: "Investimentos listados com sucesso" });
-        return  getAllInvestments();
-    } catch (error) {
-        res.status(500).json({ error: "Falha ao listar elementos" });
-    }
+app.get("/investimentos", async (req, res) => {
+        const investments =  await getAllInvestments();
+        res.json(investments);
 });
 
 app.post("/", (req,res) =>{

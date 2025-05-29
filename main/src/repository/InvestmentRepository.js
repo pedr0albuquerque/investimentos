@@ -13,6 +13,7 @@ async function createInvestment(nameInvestment, typeInvestment, valueInvestment,
 async function getAllInvestments() {
     try {
         const investments = await Investment.findAll();
+        console.log(investments);
         return investments;
     } catch (error) {
         console.error("Não foi possível listar os investimentos", error);
