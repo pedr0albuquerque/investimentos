@@ -1,7 +1,6 @@
 function createTable() {
-    // Seleciona o corpo da tabela
     const tabelaBody = document.querySelector('#tableInvestment tbody');
-    tabelaBody.innerHTML = ''; // Limpa a tabela antes de adicionar os novos dados
+    tabelaBody.innerHTML = '';
 
     const listInvestments = JSON.parse(localStorage.getItem('listInvestments')) || [];
 
@@ -61,6 +60,10 @@ function createTable() {
         tabelaBody.appendChild(line);
     });
 }
+
+fetch("http://localhost:3000/investimentos")
+  .then(response => response.json())
+  .then(data => {console.log(data)});
 
 function editInvestment(investment) {
     // Preencher o formulário com os dados do investimento selecionado

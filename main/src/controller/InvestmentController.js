@@ -1,20 +1,18 @@
 import express from "express";
+import cors from "cors";
 import { createInvestment, getAllInvestments, updateInvestment, deleteInvestment } from "../repository/InvestmentRepository.js";
 
 const app = express()
 app.use(express.json());
+app.use(cors());
 
-app.get("/", (req, res) => {    
-
-})
-
-app.get("/investments", (req, res) => {
+app.get("/investimentos", (req, res) => {
     try {
         getAllInvestments();
-        res.send("Investimentos listados com sucesso");
+        res.status(200).json({ message: "Investimentos listados com sucesso" });
+        return  getAllInvestments();
     } catch (error) {
-        console.error("Error fetching investments:", error);
-        res.status(500).json({ error: "Failed to fetch investments" });
+        res.status(500).json({ error: "Falha ao listar elementos" });
     }
 });
 
@@ -22,13 +20,10 @@ app.post("/", (req,res) =>{
     try{
         const { nameInvestment, typeInvestment, valueInvestment, dateInvestment } = req.body;
         createInvestment(nameInvestment, typeInvestment, valueInvestment, dateInvestment);
-        res.send("Investimento criado com sucesso");
+        res.status(201).send("Investimento criado com sucesso");
     } catch (error) {
-        console.error("Error creating investment:", error);
-        res.status(500).json({ error: "Failed to create investment" });
+        res.status(500).json({ error: "Falha ao criar investimento" });
     }
-    
-    
 });
 
 app.put("/investimentos/atualizar/:id", (req, res) => {
@@ -38,8 +33,7 @@ app.put("/investimentos/atualizar/:id", (req, res) => {
         updateInvestment(id, nameInvestment, typeInvestment, valueInvestment, dateInvestment);
         res.send("Investimento atualizado com sucesso");
     }catch (error) {
-        console.error("Error updating investment:", error);
-        res.status(500).json({ error: "Failed to update investment" });
+        res.status(500).json({ error: "Falha ao atualizar investimento" });
     }
 });
 
@@ -49,11 +43,10 @@ app.delete("/investimentos/deletar/:id", (req, res) => {
         deleteInvestment(id);
         res.send("Investimento deletado com sucesso");
     }catch (error) {
-        console.error("Error deleting investment:", error);
-        res.status(500).json({ error: "Failed to delete investment" });
+        res.status(500).json({ error: "Falha ao deletar investimento" });
     }
 });
 
 app.listen(3000, () => {
-  console.log("InvestmentController is running on port 3000");
+  console.log("is running on port 3000");
 });

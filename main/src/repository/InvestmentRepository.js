@@ -33,7 +33,7 @@ async function updateInvestment(id, nameInvestment, typeInvestment, valueInvestm
         await investment.save();
         return investment;
     } catch (error) {
-        console.error("Error updating investment:", error);
+        console.error("Não foi possível atualizar o investimentos", error);
         throw error;
     }
 }
@@ -45,9 +45,9 @@ async function deleteInvestment(id){
             throw new Error("Investment not found");
         }
         await investment.destroy();
-        return { message: "Investment deleted successfully" };
+        return { message: "Investimento deletado com sucesso" };
     } catch (error) {
-        console.error("Error deleting investment:", error);
+        console.error("Não foi possível deletar o investimentos", error);
         throw error;
     }
 }
