@@ -8,37 +8,37 @@ app.use(cors());
 
 app.get("/investimentos", async (req, res) => {
         const investments =  await getAllInvestments();
-        res.json(investments);
+        res.status(200).json({message: "Investimentos listados",listInvestments: investments});
 });
 
-app.post("/", (req,res) =>{
+app.post("/investimentos", (req,res) =>{
     try{
         const { nameInvestment, typeInvestment, valueInvestment, dateInvestment } = req.body;
         createInvestment(nameInvestment, typeInvestment, valueInvestment, dateInvestment);
-        res.status(201).send("Investimento criado com sucesso");
+        res.status(201).json({ message: "Investimento criado com sucesso" });
     } catch (error) {
-        res.status(500).json({ error: "Falha ao criar investimento" });
+        res.status(500).json({ message: "Falha ao criar investimento" });
     }
 });
 
-app.put("/investimentos/atualizar/:id", (req, res) => {
+app.put("/investimentos/:id", (req, res) => {
     const {nameInvestment, typeInvestment, valueInvestment, dateInvestment } = req.body;
     const id = req.params.id;
     try{
         updateInvestment(id, nameInvestment, typeInvestment, valueInvestment, dateInvestment);
-        res.send("Investimento atualizado com sucesso");
+        res.status(200).json({ message: "Investimento atualizado com sucesso" });
     }catch (error) {
-        res.status(500).json({ error: "Falha ao atualizar investimento" });
+        res.status(500).json({ message: "Falha ao atualizar investimento" });
     }
 });
 
-app.delete("/investimentos/deletar/:id", (req, res) => {
+app.delete("/investimentos/:id", (req, res) => {
     const id = req.params.id;
     try{
         deleteInvestment(id);
-        res.send("Investimento deletado com sucesso");
+        res.status(200).json({ message: "Investimento deletado com sucesso" });
     }catch (error) {
-        res.status(500).json({ error: "Falha ao deletar investimento" });
+        res.status(500).json({ message: "Falha ao deletar investimento" });
     }
 });
 

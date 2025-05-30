@@ -1,7 +1,16 @@
+// Esse arquivo js é responsavel pela interação com a tela de listagem de investimentos
+// Ele carrega a tabela de investimentos, permite editar e deletar investimentos
+
+// Função loadTable carrega a tabela de acordo com os dados recebidos
+// Ela recebe uma lista de investimentos e preenche a tabela com os dados
+// Chamada pela função getInv() que faz uma requisição ao servidor para obter os investimentos
 function loadTable(listInvestments) {
     const tabelaBody = document.querySelector('#tableInvestment tbody');
     tabelaBody.innerHTML = '';
 
+    // Verifica se a lista de investimentos é um array e itera sobre cada investimento
+    // Cria uma linha para cada investimento e adiciona os dados nas células
+    // Também adiciona os botões de editar e deletar
     if(Array.isArray(listInvestments)){
       listInvestments.forEach(investment => {
         const line = document.createElement('tr');
@@ -61,17 +70,8 @@ function loadTable(listInvestments) {
     }
 }
 
-const getInv = async() => await fetch("http://localhost:3000/investimentos")
-.then(response => response.json())
-.then(data => {loadTable(data)});
-
-getInv();
-
-let idInvestment = null
-
+// Função showFormEdit exibe o formulário de edição com os dados do investimento selecionado
 function showFormEdit(investment) {
-  console.log(investment);
-  // Preencher o formulário com os dados do investimento selecionado
   const inputEditName = document.querySelector('#editNameInvestment');
   const inputEditType = document.querySelector('#editTypeInvestment');  
   const inputEditValue = document.querySelector('#editValueInvestment');
@@ -89,6 +89,22 @@ function showFormEdit(investment) {
   document.querySelector('#editForm').style.display = 'block';
 }
 
+// Deleta o investimento com base no idInvestment
+function deleteInvestment(idInvestment) {
+  fetch(`http://localhost:3000/investimentos/${idInvestment}`, {
+    method: 'DELETE'
+  })
+  .then(response => {
+    if(response.status === 200){
+      alert("Investimento deletado com sucesso")
+      getInv();
+    }else{
+      alert("Falha ao deletar investimento");
+    }
+  })
+}
+
+// Adiciona o evento de submit ao formulário de edição
 document.querySelector('#editForm').addEventListener('submit', function(event) {
   event.preventDefault();
   const inputEditName = document.querySelector('#editNameInvestment').value;
@@ -96,11 +112,14 @@ document.querySelector('#editForm').addEventListener('submit', function(event) {
   const inputEditValue = document.querySelector('#editValueInvestment').value;
   const inputEditDate = document.querySelector('#editDateInvestment').value;
 
+  // Verifica se os campos estão preenchidos corretamente
+  // Faz a requisição PUT para atualizar o investimento
+  // Atualiza tabela dinamicamente pelo metodo getInv()
   if (!inputEditName || !inputEditType || isNaN(inputEditValue) || !inputEditDate) {
     alert("Por favor, preencha todos os campos corretamente.");
     return;
   }else{
-      fetch(`http://localhost:3000/investimentos/atualizar/${idInvestment}`, {
+      fetch(`http://localhost:3000/investimentos/${idInvestment}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -124,18 +143,15 @@ document.querySelector('#editForm').addEventListener('submit', function(event) {
     }
 });
 
-function deleteInvestment(idInvestment) {
-  fetch(`http://localhost:3000/investimentos/deletar/${idInvestment}`, {
-    method: 'DELETE'
-  })
-  .then(response => {
-    if(response.status === 200){
-      alert("Investimento deletado com sucesso")
-      getInv();
-    }else{
-      alert("Falha ao deletar investimento");
-    }
-  })
-}
+// Variável global para armazenar o id do investimento que será editado
+let idInvestment = null
 
+// Função getInv faz uma requisição ao servidor para obter os investimentos
+const getInv = async() => await fetch("http://localhost:3000/investimentos")
+.then(response => response.json())
+.then(data => {loadTable(data.listInvestments)});
+// Ao inciar a página, chama a função getInv para carregar os investimentos
+getInv();
+
+// Carrega a tabela de investimentos ao carregar a página
 window.onload = loadTable;
