@@ -1,6 +1,9 @@
 // Esse arquivo js é responsavel pela interação com a tela de listagem de investimentos
 // Ele carrega a tabela de investimentos, permite editar e deletar investimentos
 
+//importando a função de validação de data e valor
+import { verificateDate, verificateValue } from './validator.js';
+
 // Função loadTable carrega a tabela de acordo com os dados recebidos
 // Ela recebe uma lista de investimentos e preenche a tabela com os dados
 // Chamada pela função getInv() que faz uma requisição ao servidor para obter os investimentos
@@ -28,7 +31,7 @@ function loadTable(listInvestments) {
         valueInvestment.textContent = investment.valueInvestment;
 
         const dateInvestment = document.createElement('td');
-        dateInvestment.textContent = investment.dateInvestment;
+        dateInvestment.textContent = dayjs(investment.dateInvestment).format('DD/MM/YYYY');
 
         const btnEdit = document.createElement('button');
         btnEdit.id = "btnEdit";
@@ -70,6 +73,9 @@ function loadTable(listInvestments) {
     }
 }
 
+// Variável global para armazenar o id do investimento que será editado
+let idInvestment = null
+
 // Função showFormEdit exibe o formulário de edição com os dados do investimento selecionado
 function showFormEdit(investment) {
   const inputEditName = document.querySelector('#editNameInvestment');
@@ -105,6 +111,7 @@ function deleteInvestment(idInvestment) {
 }
 
 // Adiciona o evento de submit ao formulário de edição
+// Quando o formulário é enviado, ele previne o comportamento padrão e faz uma requisição PUT para atualizar o investimento
 document.querySelector('#editForm').addEventListener('submit', function(event) {
   event.preventDefault();
   const inputEditName = document.querySelector('#editNameInvestment').value;
@@ -112,13 +119,23 @@ document.querySelector('#editForm').addEventListener('submit', function(event) {
   const inputEditValue = document.querySelector('#editValueInvestment').value;
   const inputEditDate = document.querySelector('#editDateInvestment').value;
 
-  // Verifica se os campos estão preenchidos corretamente
-  // Faz a requisição PUT para atualizar o investimento
   // Atualiza tabela dinamicamente pelo metodo getInv()
   if (!inputEditName || !inputEditType || isNaN(inputEditValue) || !inputEditDate) {
     alert("Por favor, preencha todos os campos corretamente.");
     return;
   }else{
+      // Verificando se a data é válida
+      const dataResp = verificateDate(inputEditDate);
+      if(!dataResp) {
+        return;
+      }
+      
+      // Verificando se o valor do investimento é inválido
+      const valueResp = verificateValue(inputEditValue);
+      if(valueResp <= 0 ) {
+        return;
+      }
+
       fetch(`http://localhost:3000/investimentos/${idInvestment}`, {
         method: 'PUT',
         headers: {
@@ -142,9 +159,6 @@ document.querySelector('#editForm').addEventListener('submit', function(event) {
       })
     }
 });
-
-// Variável global para armazenar o id do investimento que será editado
-let idInvestment = null
 
 // Função getInv faz uma requisição ao servidor para obter os investimentos
 const getInv = async() => await fetch("http://localhost:3000/investimentos")

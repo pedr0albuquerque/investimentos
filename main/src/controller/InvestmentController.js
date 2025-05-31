@@ -1,4 +1,5 @@
 import express from "express";
+
 import cors from "cors";
 import { createInvestment, getAllInvestments, updateInvestment, deleteInvestment } from "../repository/InvestmentRepository.js";
 

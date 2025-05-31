@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lista de Investimentos</title>
 
-    <script type="module" src="../public/investmentList.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js" defer></script>
+    <script src="https://unpkg.com/currency.js@~2.0.0/dist/currency.min.js"></script>
+    <script type="module" src="../public/list.js" defer></script>
     <link rel="stylesheet" href="../public/style/listar.css" />
   </head>
   <body>
@@ -28,7 +30,7 @@
       </tbody>
     </table>
 
-    <a href="telaCadastro.html"><button id="btnBack">Voltar</button></a>
+    <a href="index.html"><button id="btnBack">Voltar</button></a>
 
     <!-- Formulário de edição, que ficará oculto inicialmente -->
     <div id="editForm" style="display: none">
@@ -49,7 +51,7 @@
         </div>
         <div>
           <label for="editDateInvestment">Data do Investimento:</label>
-          <input type="month" id="editDateInvestment" />
+          <input type="date" id="editDateInvestment" />
         </div>
         <button type="submit" id="btnSave">Salvar Alterações</button>
       </form>

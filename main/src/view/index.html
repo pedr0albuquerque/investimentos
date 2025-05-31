@@ -4,8 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tela de Cadastro</title>
-  <script type="module" src="../public/index.js" defer></script>
   <link rel="stylesheet" href="../public/style/cadastrar.css">
+  <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js" defer></script>
+  <script src="https://unpkg.com/currency.js@~2.0.0/dist/currency.min.js"></script>
+  <script type="module" src="../public/index.js" defer></script>
 </head>
 <body>
   <h1>Cadastre novos investimentos</h1>
@@ -34,7 +36,7 @@
 
     <div id="inputDate">
       <label for="dateInvestment">Data do Investimento:</label>
-      <input type="month" name="dateInvestment" id="dateInvestment">
+      <input type="date" name="dateInvestment" id="dateInvestment">
     </div>
 
     <button type="submit" id="btnSubmit">Cadastrar</button>
