@@ -37,25 +37,12 @@ function loadTable(listInvestments) {
         btnEdit.id = "btnEdit";
         btnEdit.innerText = "Editar";
         btnEdit.addEventListener('click', () => showFormEdit(investment));
-        btnEdit.style.backgroundColor = 'green';
-        btnEdit.style.color = 'white';
-        btnEdit.style.borderRadius = '8px';
-        btnEdit.style.fontSize = '16px';
-        btnEdit.style.cursor = 'pointer';  
-        btnEdit.style.border = 'none';
-        btnEdit.style.padding = '6px'
+        
 
         const btnDelete = document.createElement('button');
         btnDelete.id = "btnDelete";
         btnDelete.innerText = "Deletar";
         btnDelete.addEventListener('click', () => deleteInvestment(investment.idInvestment));
-        btnDelete.style.backgroundColor = 'red';
-        btnDelete.style.color = 'white';
-        btnDelete.style.borderRadius = '8px';
-        btnDelete.style.fontSize = '16px';
-        btnDelete.style.cursor = 'pointer'; 
-        btnDelete.style.border = 'none';
-        btnEdit.style.padding = '6px'
 
         const actions = document.createElement('td');
         actions.appendChild(btnEdit);
@@ -78,6 +65,7 @@ let idInvestment = null
 
 // Função showFormEdit exibe o formulário de edição com os dados do investimento selecionado
 function showFormEdit(investment) {
+  const editForm = document.querySelector('#editForm');
   const inputEditName = document.querySelector('#editNameInvestment');
   const inputEditType = document.querySelector('#editTypeInvestment');  
   const inputEditValue = document.querySelector('#editValueInvestment');
@@ -92,7 +80,8 @@ function showFormEdit(investment) {
   idInvestment = investment.idInvestment;
 
   // Mostrar o formulário de edição
-  document.querySelector('#editForm').style.display = 'block';
+  editForm.style.display = 'block';
+  editForm
 }
 
 // Deleta o investimento com base no idInvestment
@@ -110,13 +99,18 @@ function deleteInvestment(idInvestment) {
   })
 }
 
+// Adiciona a máscara de entrada para o campo de valor do investimento
+$(document).ready(function() {
+  $('#editValueInvestment').mask('000.000.000,00', {reverse: true});
+});
+
 // Adiciona o evento de submit ao formulário de edição
 // Quando o formulário é enviado, ele previne o comportamento padrão e faz uma requisição PUT para atualizar o investimento
 document.querySelector('#editForm').addEventListener('submit', function(event) {
   event.preventDefault();
   const inputEditName = document.querySelector('#editNameInvestment').value;
   const inputEditType = document.querySelector('#editTypeInvestment').value;  
-  const inputEditValue = document.querySelector('#editValueInvestment').value;
+  const inputEditValue = parseFloat(document.querySelector('#editValueInvestment').value.replace(/\./g,'').replace(/,/g, '.'));
   const inputEditDate = document.querySelector('#editDateInvestment').value;
 
   // Atualiza tabela dinamicamente pelo metodo getInv()

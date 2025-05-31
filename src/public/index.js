@@ -6,13 +6,18 @@ import { verificateDate, verificateValue } from './validator.js';
 
 const form = document.querySelector('#formInvestment');
 
+// Adiciona a máscara de entrada para o campo de valor do investimento
+$(document).ready(function() {
+  $('#valueInvestment').mask('000.000.000,00', {reverse: true});
+});
+
 //Adicionando o evento de submit ao formulário
 form.addEventListener("submit", (event) => {
   event.preventDefault();
 
   const name = document.querySelector('#nameInvestment').value;
   const type = document.querySelector('input[name="typeInvestment"]:checked').value;
-  const value = parseFloat(document.querySelector('#valueInvestment').value);
+  const value = parseFloat(document.querySelector('#valueInvestment').value.replace(/\./g,'').replace(/,/g, '.'));
   const date = document.querySelector('#dateInvestment').value;
 
 // Verificando se os campos estão preenchidos corretamente
@@ -32,7 +37,6 @@ form.addEventListener("submit", (event) => {
       // Se o valor for válido, trata o numero para garantir a precisão
 
       const valueResp = verificateValue(value);
-      console.log(valueResp);
       if(valueResp <= 0 ) {
         return;
       }

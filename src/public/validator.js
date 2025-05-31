@@ -27,10 +27,10 @@ function verificateValue(value) {
     return 0;
   }else{
     const valueFormatted = currency(value, {
-        decimal: '.',
         precision: 2
     });
 
+    console.log(valueFormatted.value);
     return valueFormatted.value;
   }
 }

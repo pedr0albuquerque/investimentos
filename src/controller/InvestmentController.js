@@ -44,5 +44,5 @@ app.delete("/investimentos/:id", (req, res) => {
 });
 
 app.listen(3000, () => {
-  console.log("is running on port 3000");
+  console.log("Servidor rodando na porta 3000");
 });
