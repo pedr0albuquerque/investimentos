@@ -2,7 +2,7 @@
 
 # O que é
 
-Projeto de aplicação web que realiza o gerenciamento de investimentos utilizando Node.js no back-end, MySQL 8.0 como banco de dados e um front-end com HTML, CSS e JavaScript. O Live Server é usado para servir os arquivos da interface, enquanto o Express gerencia as rotas e requisições no back-end.
+Projeto de aplicação web que realiza o gerenciamento de investimentos utilizando Node.js no back-end, MySQL 8.0 como banco de dados e um front-end com HTML, CSS e JavaScript (Front end no [repositório](https://github.com/pedr0albuquerque/investimentos-front-end)). O Express gerencia as rotas e requisições no back-end.
 
 ---
 
@@ -20,12 +20,8 @@ Projeto de aplicação web que realiza o gerenciamento de investimentos utilizan
 - Node.js (22.15.0)
 - Express.js
 - MySQL 8.0
-- cors
-- currency.js (via CDN)
-- dayjs (via CDN)
-- JQuery, JQuery Mask (via CDN)
-- Live Server (extensão do VS Code)
-- HTML5, CSS3, JavaScript
+- Cors
+- Sequelize
 
 # Antes de executar
 
@@ -56,9 +52,6 @@ Ex:
         dialect: 'mysql'
     })
 
-- Instale a extensão LiveServer na IDE, LiveServer é uma extensão que abre o arquivo html no navegador.
-
-# Como rodar o projeto
+# Como executar o projeto
 
 - Ainda na pasta "investimentos" execute o comando: npm start
-- Abra o arquivo index.html e execute o LiveServer: Clique em "Go Live" no canto inferior direito ou use o atalho (Alt + L depois Alt + O) ou pesquise o comando "Open with Live Server"
