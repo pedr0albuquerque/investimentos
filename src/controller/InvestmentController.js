@@ -1,7 +1,7 @@
 import express from "express";
 
 import cors from "cors";
-import { createInvestment, getAllInvestments, updateInvestment, deleteInvestment } from "../repository/InvestmentRepository.js";
+import { createInvestment, getAllInvestments, updateInvestment, deleteInvestment } from "../services/InvestmentService.js";
 
 const app = express()
 app.use(express.json());
