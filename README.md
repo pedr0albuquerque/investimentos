@@ -36,8 +36,8 @@ Projeto de aplicação web que realiza o gerenciamento de investimentos utilizan
 create database gf;
 use gf;
 
-create table investimento(
-	id_inv int not null primary key,
+create table investimentos(
+	id_inv int not null primary key auto_increment,
     name_inv varchar(30) not null,
     type_inv varchar(15) not null,
     value_inv decimal(10,2) not null,
