@@ -1,7 +1,7 @@
 //conexao com banco de dados
 import Sequelize from 'sequelize'
 
-const sequelize = new Sequelize('gf','root','0123',{
+const sequelize = new Sequelize('nome_banco','user','senha',{
     host: 'localhost',
     dialect: 'mysql'
 })
